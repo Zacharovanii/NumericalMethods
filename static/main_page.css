@@ -1,0 +1,54 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+@font-face {
+	font-family: kamerik-web;
+	src: url(/static/fonts/kamerik205-heavy.woff2);
+}
+
+@font-face {
+	font-family: mont-web;
+	src: url(/static/fonts/Montserrat-Regular.woff2);
+}
+
+:root {
+	-text-clr: #c9c9c9
+}
+
+body {
+	width: 100%;
+	height: 100vh;
+	background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(14, 14, 64, 1) 0%, rgba(0, 212, 255, 1) 100%);
+	font-family: mont-web;
+	font-weight: normal;
+	color: #c9c9c9;
+}
+
+a,
+a:visited {
+	outline: none;
+	text-decoration: none;
+	color: #c9c9c9;
+}
+
+.methods__container {
+	width: 25vw;
+	margin: 0 auto;
+}
+
+.method__item {
+	text-align: center;
+	margin-bottom: 5vh;
+	padding: 10px;
+	font-size: 5vh;
+	border: 2px solid rgba(125, 122, 145, 0.9);
+	border-radius: 15px;
+	background-color: rgba(125, 122, 145, 0.2);
+}
+
+.method__item:hover {
+	background-color: rgba(125, 122, 145, 0.69);
+}
