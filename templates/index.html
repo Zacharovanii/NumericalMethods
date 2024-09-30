@@ -21,10 +21,12 @@
 					\(f(c) * f^{\prime\prime}(c) > 0\)
 				</li>
 			</div>
-			{% for formula in formulas %}
+			{% for piece in formulas %}
 			<div class="formula">
 				<li>
-					\({{ formula.replace('//', '/')}}\)
+					{% for formula in piece %}
+					<p>\({{ formula.replace('//', '/')}}\)</p>
+					{% endfor %}
 				</li>
 			</div>
 			{% endfor %}

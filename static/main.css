@@ -27,5 +27,9 @@ body {
 }
 
 .formula {
-	margin-bottom: 2.5vh;
+	margin-bottom: 5vh;
+}
+
+p {
+	margin-bottom: 1vh;
 }

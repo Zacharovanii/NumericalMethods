@@ -169,20 +169,27 @@ class NewtonMethod:
         a = self.a
         b = self.b
         progress_lst = []
-        # progress_lst.append(latex)
+        progress_lst.append(latex)
         while True:
             f = self.F(x_0)
             f1 = self.F1(x_0)
             x = x_0 - f/f1
-            progress_lst.append(self.newtonFormulaLatex(float(x_0), float(f), float(f1), float(x)))
             if (self.F(a) < 0 < self.F(x)) or (self.F(a) > 0 > self.F(x)):
-                progress_lst.append(self.expr.chooseSegment(float(a), float(b), float(x), float(self.F(a)),
-                                              float(self.F(b)), float(self.F(x)), 'right'))
+                temp = [
+                    self.newtonFormulaLatex(float(x_0), float(f), float(f1), float(x)),
+                    self.expr.chooseSegment(float(a), float(b), float(x), float(self.F(a)),
+                                            float(self.F(b)), float(self.F(x)), 'right')
+                ]
+                progress_lst.append(temp)
                 b = x
 
             else:
-                progress_lst.append(self.expr.chooseSegment(float(a), float(b), float(x), float(self.F(a)),
-                                              float(self.F(b)), float(self.F(x)), 'left'))
+                temp = [
+                    self.newtonFormulaLatex(float(x_0), float(f), float(f1), float(x)),
+                    self.expr.chooseSegment(float(a), float(b), float(x), float(self.F(a)),
+                                            float(self.F(b)), float(self.F(x)), 'left')
+                ]
+                progress_lst.append(temp)
                 a = x
 
             if abs(x - x_0) < self.eps:
