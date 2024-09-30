@@ -17,11 +17,17 @@
 	<div class="formuls_container">
 		<ol>
 			<div class="formula">
-				<li>\(a \ne 0\) \(ax^2 + bx + c = 0\)</li>
+				<li>
+					\(f(c) * f^{\prime\prime}(c) > 0\)
+				</li>
 			</div>
+			{% for formula in formulas %}
 			<div class="formula">
-				<li>\([\stackrel{+}{0}:\stackrel{-}{0.2}]\bcancel{[\stackrel{-}{0.2}:\stackrel{-}{1}]}\)</li>
+				<li>
+					\({{ formula.replace('//', '/')}}\)
+				</li>
 			</div>
+			{% endfor %}
 		</ol>
 	</div>
 </body>
