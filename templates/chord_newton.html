@@ -1,0 +1,47 @@
+<div class="method_label">
+	<h3>Метод касательной</h3>
+</div>
+<ol>
+	<div class="formula">
+		<li>
+			<p>{{AB[0]}}</p>
+			<p>{{AB[1]}}</p>
+		</li>
+	</div>
+	{% for piece in formulasNewton %}
+	<div class="formula">
+		<li>
+			{% for formula in piece %}
+			<p>\({{ formula.replace('//', '/')}}\)</p>
+			{% endfor %}
+		</li>
+	</div>
+	{% endfor %}
+	<div class="formula">
+		<p>x = {{ resultNewton }}</p>
+	</div>
+</ol>
+
+<div class="method_label">
+	<h3>Метод хорд</h3>
+</div>
+<ol>
+	<div class="formula">
+		<li>
+			<p>{{AB[0]}}</p>
+			<p>{{AB[1]}}</p>
+		</li>
+	</div>
+	{% for piece in formulasChord %}
+	<div class="formula">
+		<li>
+			{% for formula in piece %}
+			<p>\({{ formula.replace('//', '/')}}\)</p>
+			{% endfor %}
+		</li>
+	</div>
+	{% endfor %}
+	<div class="formula">
+		<p>x = {{ resultChord }}</p>
+	</div>
+</ol>

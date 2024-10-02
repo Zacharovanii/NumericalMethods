@@ -69,28 +69,35 @@ class ChordMethod:
         self.eps = eps
         self.chordEqLatex = r'x = a - \frac{\left(b - a\right) f(a)}{f(b) - f(a)}'
         if flag == 'a':
+            self.flagAB = 'a'
             self.c2F = lambda a, b, a_values, b_values: a - (a_values * (b - a)) / (b_values - a_values)
             self.chordEqLatex = r'x = a - \frac{\left(b - a\right) f(a)}{f(b) - f(a)}'
         elif flag == 'b':
+            self.flagAB = 'b'
             self.c2F = lambda a, b, a_values, b_values: b - (b_values * (a - b)) / (b_values - a_values)
             self.chordEqLatex = r'x = b - \frac{\left(a - b\right) f(b)}{f(b) - f(a)}'
 
     @staticmethod
-    def getChordEqLatex(a, b, a_val, b_val):
-        f_a = str(a_val)
-        f_b = str(b_val)
-        a = str(a)
-        b = str(b)
-        return 'x = ' + a + r' - \frac{\left(' + b + ' - ' + a + r'\right) ' + f_a + '}{' + f_b + ' - ' + f_a + '}'
+    def getChordEqLatex(a, b, a_val, b_val, x):
+        f_a = str(a_val)[:8]
+        if a_val < 0:
+            f_a = f"({f_a})"
+        f_b = str(b_val)[:8]
+        a = str(a)[:8]
+        b = str(b)[:8]
+        x = str(x)[:8]
+        chordLatex = f"x = {a}{r' - \frac{\left('}{b} - {a}{r'\right) '}{f_a}{'}{'}{f_b} - {f_a}{'}'} = {x}"
+        return chordLatex
+        # return 'x = ' + a + r' - \frac{\left(' + b + ' - ' + a + r'\right) ' + f_a + '}{' + f_b + ' - ' + f_a + '}'
 
     @staticmethod
     def chooseSegment(a, b, c, a_val, b_val, c_val, flag):
         a_hat = '+' if a_val >= 0 else '-'
         b_hat = '+' if b_val >= 0 else '-'
         c_hat = '+' if c_val >= 0 else '-'
-        a = str(a)
-        b = str(b)
-        c = str(c)
+        a = str(a)[:8]
+        b = str(b)[:8]
+        c = str(c)[:8]
         left = r'[\stackrel{' + a_hat + '}{' + a + r'}:\stackrel{' + c_hat + '}{' + c + '}]'
         right = r'[\stackrel{' + c_hat + '}{' + c + r'}:\stackrel{' + b_hat + '}{' + b + '}]'
         if flag == 'left':
@@ -105,22 +112,32 @@ class ChordMethod:
         b = self.b
         eps = self.eps
         progress_lst = []
+        progress_lst.append([f"Идем\:по\:стороне: {self.flagAB}",
+                             self.chordEqLatex])
         if F(a) * F(b) >= 0:
             raise Exception("Initial approximation error")
         c1 = a
         while True:
             a_values = float(F(a))
             b_values = float(F(b))
-            progress_lst.append(self.getChordEqLatex(a, b, a_values, b_values))
+            # progress_lst.append()
             c2 = self.c2F(a, b, a_values, b_values)
             c_values = float(F(c2))
             if abs(c1 - c2) < eps:
                 return progress_lst, c2
             if (a_values < 0 < c_values) or (a_values > 0 > c_values):
-                progress_lst.append(self.chooseSegment(a, b, c2, a_values, b_values, c_values, 'right'))
+                temp = [
+                    self.getChordEqLatex(a, b, a_values, b_values, c2),
+                    self.chooseSegment(a, b, c2, a_values, b_values, c_values, 'right')
+                ]
+                progress_lst.append(temp)
                 b = c2
             else:
-                progress_lst.append(self.chooseSegment(a, b, c2, a_values, b_values, c_values, 'left'))
+                temp = [
+                    self.getChordEqLatex(a, b, a_values, b_values, c2),
+                    self.chooseSegment(a, b, c2, a_values, b_values, c_values, 'left')
+                ]
+                progress_lst.append(temp)
                 a = c2
             c1 = c2
 
@@ -135,6 +152,7 @@ class NewtonMethod:
         self.a = x_a
         self.b = x_b
         self.eps = eps
+        self.flagAB = None
         self.chooseABLatex = r'f(c) * f^{\prime\prime}(c) > 0'
 
     def chooseAB(self):
@@ -144,13 +162,15 @@ class NewtonMethod:
         bF2 = self.F2(self.b)
         chooseLatex = [
             'Если: c = a',
-            f'{aF} * {aF2} > 0',
+            f'{float(aF)} * {float(aF2)} > 0',
             'Если: c = b',
-            f'{bF} * {bF2} > 0'
+            f'{float(bF)} * {float(bF2)} > 0'
         ]
         if self.F(self.a) * self.F2(self.a) >= 0:
+            self.flagAB = 'a'
             return self.a, chooseLatex
         elif self.F(self.b) * self.F2(self.b) >= 0:
+            self.flagAB = 'b'
             return self.b, chooseLatex
 
 
@@ -162,6 +182,9 @@ class NewtonMethod:
         x = str(x)[:7]
         formulaLatex = r'x = ' + c + r' - \frac{' + cF + '}{' + cF1 + '}' + f" = {x}"
         return formulaLatex
+
+    def getFlagAB(self):
+        return self.flagAB
 
     def findRoot(self):
         x_0, latex = self.chooseAB()

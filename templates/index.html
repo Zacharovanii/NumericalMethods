@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Math</title>
-	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-	<link rel="icon" href="data:;base64,=">
+	<title>Numerical Methods</title>
+	<link rel="stylesheet" href="../static/index.css">
 </head>
 
 <body>
-	<div class="main_container">
-		<h2>Результаты</h2>
-	</div>
-	<div class="formuls_container">
-		<ol>
-			<div class="formula">
-				<li>
-					\(f(c) * f^{\prime\prime}(c) > 0\)
-				</li>
+	<h1>Калькулятор <span>Численных методов</span></h1>
+	<div class="methods__container">
+		<a href="{{ url_for('multy_method') }}">
+			<div class="method__item">
+				<p>Комбинированный метод хорд и касательной</p>
 			</div>
-			{% for piece in formulas %}
-			<div class="formula">
-				<li>
-					{% for formula in piece %}
-					<p>\({{ formula.replace('//', '/')}}\)</p>
-					{% endfor %}
-				</li>
-			</div>
-			{% endfor %}
-		</ol>
+		</a>
+		<div class="method__item">
+			<p>Метод касательной</p>
+		</div>
+		<div class="method__item">
+			<p>Метод хорд</p>
+		</div>
 	</div>
 </body>
 

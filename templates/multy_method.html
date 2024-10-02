@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Math</title>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" href="../static/multy_method.css">
+</head>
+
+<body>
+	<div class="main_container">
+		<h2>Введите формулу</h2>
+		<p>Пример ввода:<br>Для функции вида \(2x^3 + 5x^2 - 7x + 8\)<br>Необходима запись ввиде 2x^3 + 5x^2 - 7x + 8</p>
+	</div>
+	<form action="" method="POST" novalidate>
+		{{ form.csrf_token }}
+		<div class="input__form">
+			<div class="form-group">
+				<label class="form__label">{{ form.func.label }}</label>
+				{{ form.func(class="form__input", placeholder=" ") }}
+				{% for error in form.func.errors %}
+				<div class="alert alert-danger" role="alert">
+					<span>{{ error }}</span>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="form-group">
+				<label class="form__label">{{ form.a.label }}</label>
+				{{ form.a(class="form__input", placeholder=" ") }}
+				{% for error in form.a.errors %}
+				<div class="alert alert-danger" role="alert">
+					<span>{{ error }}</span>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="form-group">
+				<label class="form__label">{{ form.b.label }}</label>
+				{{ form.b(class="form__input", placeholder=" ") }}
+				{% for error in form.b.errors %}
+				<div class="alert alert-danger" role="alert">
+					<span>{{ error }}</span>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="form-group">
+				<label class="form__label">{{ form.eps.label }}</label>
+				{{ form.eps(class="form__input", placeholder=" ") }}
+				{% for error in form.eps.errors %}
+				<div class="alert alert-danger" role="alert">
+					<span>{{ error }}</span>
+				</div>
+				{% endfor %}
+			</div>
+			{{ form.submit(class="form__button") }}
+		</div>
+	</form>
+	<div class="formuls_container">
+		{% if newton_root %}
+		<p>Решение</p>
+		<ol>
+			{% for element in newton_progress %}
+			<div class="formula">
+				<li>
+					{% for formula in element %}
+					<p>\({{ formula.replace('//', '/') }}\)</p>
+					{% endfor %}
+				</li>
+			</div>
+			{% endfor %}
+		</ol>
+		{% endif %}
+	</div>
+</body>
+
+</html>
