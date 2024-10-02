@@ -59,6 +59,13 @@
 	<div class="formuls_container">
 		{% if newton_root %}
 		<p>Решение</p>
+		{% if ABLatex %}
+		<p>\({{ABLatex[0]}}\)</p>
+		<p>\({{ABLatex[1]}}\)</p>
+		{% endif %}
+		<p>\({{F1}}\)</p>
+		<p>\({{F2}}\)</p>
+		<p>Метод касательной</p>
 		<ol>
 			{% for element in newton_progress %}
 			<div class="formula">
@@ -70,6 +77,22 @@
 			</div>
 			{% endfor %}
 		</ol>
+		<p>Корень: x = {{newton_root}}</p>
+		{% endif %}
+		<p>Метод хорд</p>
+		{% if chord_root %}
+		<ol>
+			{% for element in chord_progress %}
+			<div class="formula">
+				<li>
+					{% for formula in element %}
+					<p>\({{ formula.replace('//', '/') }}\)</p>
+					{% endfor %}
+				</li>
+			</div>
+			{% endfor %}
+		</ol>
+		<p>Корень: x = {{chord_root}}</p>
 		{% endif %}
 	</div>
 </body>
